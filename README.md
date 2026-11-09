@@ -1,5 +1,7 @@
 # 🧠 Room to Remember
 
+![Room to Remember Cover](cover.jpg)
+
 **A memory palace for Snap Spectacles.** Walk your own living room, drop weird, giant, cartoonish objects onto real furniture, then walk the route again and recall them in order. This version teaches the **first six cranial nerves (I–VI)**, a classic ordered list medical students have to memorize.
 
 Built with [Lens Studio](https://ar.snap.com/lens-studio) 5.23 for **SPECS**, using the Spectacles Interaction Kit (SIK), Spectacles UI Kit and the LEAF testing framework. Planned with the Devpost Learn `plan-lens` skill and built by an AI coding agent through **CLAD** and the **Lens Studio MCP**. Created for [Learn AR with SPECS](https://learn-specs.devpost.com/).

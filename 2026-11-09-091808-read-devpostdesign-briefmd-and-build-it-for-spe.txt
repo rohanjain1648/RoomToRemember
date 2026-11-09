@@ -1,0 +1,1240 @@
+
+
+ ▐▛███▛█   Claude Code v2.1.319
+▝▜██████▀  Opus 5.5 · Claude Pro
+ ▝▝   ▝▝   D:\downloads\specs\RoomToRemember
+
+  ⎿  SessionStart:startup says: 🔑 Pinecone plugin active, but no API key is 
+     available. Get a free API key here: 
+     https://app.pinecone.io/?sessionType=signup and use the pinecone:quickstart
+     skill to get started. Pinecone CLI (pc): not installed (optional). (To 
+     silence this, set PINECONE_SKIP_AUTH_CHECK=1, or ask Claude how.)
+
+❯ Read devpost/design-brief.md and build it for SPECS. Follow the brief         
+  closely. Get the basic flow working first, then add detail. Write and run     
+  LEAF tests for each done criterion, and tell me which pass.                   
+
+● I'll start by reading the brief and checking the project state.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The brief is clear. This build needs the Lens Studio MCP server, and it failed
+  to connect when the session started (ECONNREFUSED). I'll check whether it has
+  come back up.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Lens Studio is running (two instances), but its MCP server refused the
+  connection. I'll check which ports it's actually listening on. This is a local
+  socket listing, not an HTTP call.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I haven't built anything yet, because Lens Studio's MCP connection is down for
+  this session. The project rules say that when MCP is unavailable I should
+  stop and tell you, not work around it.
+
+  - What happened: When this session started, nothing was listening on
+    localhost:50040 yet, so the lens-studio connection was refused and its tools
+    were never loaded.
+  - What's true now: Lens Studio has finished starting, and the instance that
+    has RoomToRemember open (process 18956) is now listening on port 50040. The
+    session just hasn't reconnected to it.
+  - Second instance: Another copy of Lens Studio (process 18492) is also
+    running, on port 50041. If it has a different project open, it's harmless.
+    If it's another copy of RoomToRemember, close it so the two don't fight over
+    the project.
+
+  To fix it: type /mcp and reconnect lens-studio, or restart Claude Code. Then
+  say "go" and I'll start.
+
+  Plan once it's connected, following the brief's build order:
+  1. Grey stand-in living room at real size: six furniture pieces on a 5 × 5 m
+     loop, with the doorway as the start.
+  2. The basic loop: Start button, then placing card, then pinch furniture to
+     place, then dots, then recall with Reveal and Got it / Missed, then score
+     and Walk again. This uses the Spectacles Interaction Kit (SIK) and UI Kit,
+     both already installed in Packages/.
+  3. The detail: Hint sound, then outline; 1.5× and 2× sizes for misses; pulsing
+     for missed dots; the chime toward the next dot; and the final "Now walk it
+     from memory" mode.
+  4. The six generated 3D objects and their sounds, checked to read clearly from
+     1.5 m.
+  5. One LEAF test scenario per done criterion (five in all), run in Preview,
+     with a report of which pass and which can't be tested.
+
+✻ Baked for 59s · done 7:48 AM
+
+❯ /mcp                                                                          
+  ⎿  Reconnected to lens-studio.
+
+❯ go                                                                            
+
+● MCP is connected. I'll load the Lens Studio skills I need for this build all
+  at once.
+
+● Skill(ls-clad:lens-studio-router)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:specs-interaction-recipes)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:scene-construction)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:specs-leaf-write-scenarios)
+  ⎿  Successfully loaded skill
+
+● Running the router's gate checks inline: confirm the project is the one
+  loaded, check sign-in, and check the platform.
+
+  Called lens-studio, ran 1 shell command (ctrl+o to expand)
+
+● The project is open, but Lens Studio says you're signed out, and the 3D model
+  and sound tools need an account. Please open the profile menu at the top right
+  of the toolbar and sign in.
+
+● User answered Claude's questions:
+  ⎿  · Lens Studio reports you're not signed in, and the asset generation tools 
+     need an account. Sign in from the profile menu at the top right of the Lens
+     Studio toolbar, then tell me here. Have you signed in? → I've signed in
+
+  Called lens-studio (ctrl+o to expand)
+
+● The re-check still says you're not signed in (isAuthorized: false), so I'm
+  stopping here as the setup rules require. I haven't changed anything in the
+  project.
+
+  HANDOFF_PAYLOAD
+  - status: blocked
+  - reason: not_signed_in
+  - project_path: D:/downloads/specs/RoomToRemember/RoomToRemember.esproj
+  - lens_studio_version: 5.23.2
+  - mcp_status: ready
+  - suggested_next_step: sign in to Lens Studio in the window that has 
+  RoomToRemember open, then say "go"
+
+  Likely cause: two copies of Lens Studio are running. The one connected to me
+  (process 18956) has RoomToRemember open; the other (process 18492) is
+  separate. If you signed in through the other window, this one may not have
+  picked it up.
+
+  To fix it: in the RoomToRemember window, open the profile menu at the top
+  right, check that it shows you signed in, and sign in there if it doesn't.
+  Closing the other copy also helps. Then say "go" and I'll check again.
+
+  If you'd rather not wait: say "build without sign-in". I'd make the six
+  objects from simple shapes (nose, eyeball, wheeled eyeball, pulley,
+  three-headed creature, UFO) and leave the generated 3D models and sounds out.
+  The whole flow and all five LEAF tests would still work. I'd add the generated
+  models and sounds later, once sign-in works.
+
+✻ Cogitated for 1m 25s · done 7:58 AM
+
+❯ check once again i have logged in                                             
+
+  Called lens-studio (ctrl+o to expand)
+
+● You're signed in now. I'm building for Specs, since you asked for SPECS and
+  the project targets Spectacles. I'll run the builder's pipeline here in this
+  session, starting with its procedure file.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● I've read the builder pipeline. Next I'll load the skills it needs (field
+  notes, project init, mesh, SFX, music, UI, icons) together.
+
+● Skill(ls-clad:lens-studio-field-notes)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:specs-project-init)  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:build-mesh)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:build-sfx)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:build-music)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:specs-build-ui)
+  ⎿  Successfully loaded skill
+
+● Skill(ls-clad:icon-selector)
+  ⎿  Successfully loaded skill
+
+● Skills are loaded. Next, the project-init checks: scene snapshot, packages,
+  Node/Blender, and loading the remaining tool schemas.
+
+  Called lens-studio 2 times, ran 3 shell commands (ctrl+o to expand)
+
+● Camera, SIK prefab, and both packages are present. Next I'll configure the
+  Preview panel for a Specs device in Interactive mode.
+
+  Called lens-studio 2 times, ran 2 shell commands (ctrl+o to expand)
+
+● The environment is set up with Specs, Camera, SIK, UIKit and Node 22, with
+  Preview on stereo Plane; Blender is missing but not needed. Next I'll check
+  the floor's position relative to the camera.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● The camera starts at the origin (the user's head). I'll put the floor at y =
+  −160 cm, a typical eye height, and expose it as a setting. Here's what the
+  empty Plane preview looks like first:
+
+  Called lens-studio (ctrl+o to expand)
+
+● I'm switching to outputPath for screenshots and starting the six memory-object
+  mesh jobs, which take minutes, against a grey-box stand-in room.
+
+  Called lens-studio 4 times, ran 4 shell commands (ctrl+o to expand)
+
+● That failure was mine: Git Bash rewrote /v1/generations into a Windows path.
+  I'll disable path conversion and retry.
+
+  Called lens-studio 4 times, ran 1 shell command (ctrl+o to expand)
+
+● Four mesh jobs are queued (Nose, Eyeball, WheelEyeball, Pulley). While they
+  run I'll import the icons.
+
+  Called lens-studio 6 times (ctrl+o to expand)
+
+● Icons are imported. Now I'll write the SFX generator while the meshes cook,
+  starting with the shared preflight reference.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Write(tempAssetGen\gen_sfx_roomtoremember.js)
+  ⎿  Wrote 126 lines to tempAssetGen\gen_sfx_roomtoremember.js
+      1 // One-shot generator for all Room to Remember SFX.
+      2 const path = require('path');
+      3 const fs = require('fs');
+      4 const ENGINE = 'C:/Users/ACER/.claude/plugins/cache/ls-extensions
+        /ls-clad/1.0.0/skills/build-sfx/tools';
+      5 const a = require(ENGINE);
+      6 const P = a.sfx_presets;
+      7 const SR = a.SAMPLE_RATE;
+      8 const PROJECT_ASSETS_SFX = 'D:/downloads/specs/RoomToRemember/Ass
+        ets/GeneratedSFX';
+     … +118 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All 12 sounds rendered with healthy peaks. Now I'll poll the mesh jobs.
+
+  Called lens-studio 4 times, ran 1 shell command (ctrl+o to expand)
+
+● All four meshes finished. The poll output is huge, so before downloading I'll
+  make a filtered copy of the request script that returns only what I need.
+
+  Searched for 1 pattern, called lens-studio 4 times, ran 3 shell commands (ctrl+o to expand)
+
+● My patch misread the response shape (the job object is json itself). Fixing
+  it:
+
+  Called lens-studio 4 times, ran 1 shell command (ctrl+o to expand)
+
+● All four URLs are saved. I'll download and normalize in the scratchpad before
+  copying into Assets, so Lens Studio imports each mesh only once. I'm also
+  queuing the last two meshes (Creature, Ufo).
+
+  Called lens-studio 2 times, ran 2 shell commands (ctrl+o to expand)
+
+● The four meshes are intact, so I'm normalizing them to 35–40 cm and seating
+  them on the floor next. Without Blender I can't verify their facing by
+  rendering, so I'll check that in the preview capture.
+
+  Ran 1 shell command (ctrl+o to expand)
+● The four meshes are now 33–42 cm and seated on the floor. While the last two
+  generate, I'll read the UIKit helper and pattern references so the UI modules
+  compile on the first try.
+
+  Read 4 files, ran 4 shell commands (ctrl+o to expand)
+
+● Four meshes, 12 sounds and 6 icons are done, with the last two meshes still
+  generating. I'm designing the scripts now, and I'll check how LEAF tests
+  simulate walking up to objects before writing the proximity logic.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● LEAF can't move the camera, so the Lens will expose a labelled hook that tests
+  use to set viewer position. I'm installing the LEAF package and polling the
+  last two meshes next.
+
+● Skill(ls-clad:specs-leaf-install-packages)
+  ⎿  Successfully loaded skill
+
+  Called lens-studio 4 times, ran 2 shell commands (ctrl+o to expand)
+
+● All six meshes are now in. The LEAF install timed out on my end, so I'll check
+  whether it landed anyway.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● LEAF 4.0.0 is installed (with Bitmoji 3D). Before writing the scripts, I'll
+  check the runtime API for the few calls I'm unsure of: spatial audio, AABB,
+  and colliders.
+
+  Called lens-studio, ran 3 shell commands (ctrl+o to expand)
+
+● Box and sphere mesh presets exist. Next I'll create the shared assets (meshes
+  and materials for the stand-in room, dots, and the hint outline) and measure
+  the box primitive's native size.
+
+  Called lens-studio (ctrl+o to expand)
+
+● The apply timed out, probably because Lens Studio was still importing LEAF and
+  the meshes. I'll check what landed before doing anything else.
+
+  Called lens-studio, ran 2 shell commands (ctrl+o to expand)
+
+● Creature.glb and Ufo.glb haven't been imported yet, which may be what's
+  blocking Lens Studio. I'll wait for their .meta files to appear.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Still not imported after about a minute. I'll check whether Lens Studio is
+  responsive or stuck behind a dialog.
+
+  Called lens-studio (ctrl+o to expand)
+
+● Lens Studio is responsive; it just didn't pick up the two files. Before
+  importing them through the Editor API, I'll load the editor-api skill, as the
+  project rules require.
+
+● Skill(ls-clad:editor-api)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I'll move the two un-imported GLBs out of Assets and import them properly from
+  the scratchpad.
+
+  Called lens-studio, ran 2 shell commands (ctrl+o to expand)
+
+● The timed-out apply did finish its assets in the background. Next I'll check
+  whether it also created the box probe.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● The box primitive is 1 cm per unit. Next I'll check the SIK animate utility
+  and Interactable signatures before writing the scripts.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● I have everything I need. Writing the scripts now, starting with the data and
+  pure-logic modules.
+
+● Write(Assets\Scripts\RoomToRememberData.ts)
+  ⎿  Wrote 33 lines to Assets\Scripts\RoomToRememberData.ts
+       1 // RoomToRememberData — the list being memorized (cranial nerves
+          I–VI) and fixed asset contracts.
+       2 // Owns: item content (numeral, name, function, sound key, mesh 
+         key). Pure data, no scene access.
+       3 // Must not: hold runtime state (see RoomToRememberState).
+       4 
+       5 export interface MemoryItem {
+       6   numeral: string      // "I"
+       7   name: string         // "Olfactory"
+       8   meaning: string      // "smell"
+     … +25 lines (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberState.ts)
+  ⎿  Wrote 97 lines to Assets\Scripts\RoomToRememberState.ts
+      1 // RoomToRememberState — single owner of the memory-palace game s
+        tate.
+      2 // Owns: phase, which item sits on which furniture, recall-lap pr
+        ogress, hint level,
+      3 //       per-item miss level (0 = normal, 1 = missed once, 2 = mi
+        ssed twice+), lap score.
+      4 // Must not: touch the scene, audio, or UI. Main reads it and pus
+        hes results to the views.
+      5 
+      6 import { ITEMS } from "./RoomToRememberData"
+     … +91 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberAudio.ts)
+  ⎿  Wrote 78 lines to Assets\Scripts\RoomToRememberAudio.ts
+       1 // RoomToRememberAudio — all sound playback for Room to Remember
+         .
+       2 // Owns: the WAV references, per-spot spatial AudioComponents (s
+         o hints/chimes come from the
+       3 //       object's exact spot), and one non-spatial UI channel.
+       4 // Expects: Main calls attachSpot(i, sceneObject) once per item 
+         spot, then play* helpers.
+       5 // Must not: decide when sounds play (Main does) or touch UI.
+       6 
+       7 const CLIPS: { [key: string]: AudioTrackAsset } = {
+     … +71 lines (ctrl+o to expand)
+
+● Next, the memory-object controller. It owns the per-item visuals: the model,
+  the faint hint outline, the glowing dot, and all their animations.
+
+● Write(Assets\Scripts\RoomToRememberMemoryObjects.ts)  ⎿  Wrote 328 lines to Assets\Scripts\RoomToRememberMemoryObjects.ts
+       1 // RoomToRememberMemoryObjects — the visual side of each memory 
+         item.
+       2 // Owns: per-item runtime spot (created on placement, under the 
+         furniture's authored Slot),
+       3 //       the generated GLB model, its faint "ghost" outline copy
+         , the glowing dot, and every
+       4 //       animation on them (pop-in, shrink-to-dot, reveal, wobbl
+         e, sparkle burst, dot pulse).
+       5 // Expects: Main passes in prefabs + materials + tunables; Main 
+         decides WHEN, this decides HOW.
+     … +323 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberFurniture.ts)
+  ⎿  Wrote 126 lines to Assets\Scripts\RoomToRememberFurniture.ts
+      1 // RoomToRememberFurniture — makes each authored stand-in furnitu
+        re piece pinchable.
+      2 // Owns: one box collider + SIK Interactable per furniture root, 
+        sized from the piece's own
+      3 //       visual bounds, and the hover highlight. Reports pinches 
+        as onPinch(furnitureIndex).
+      4 // Expects: every child of `furnitureRoot` is one piece; each pie
+        ce has a child named "Slot"
+      5 //          (authored anchor on its top surface where the memory 
+        object sits).
+     … +121 lines (ctrl+o to expand)
+
+● That collider code got messy, with a leftover line that wouldn't even work.
+  I'll simplify it: one centred hitbox child per piece, holding both the
+  collider and the Interactable.
+
+● Write(Assets\Scripts\RoomToRememberFurniture.ts)
+  ⎿  Added 34 lines, removed 57 lines
+      1  // RoomToRememberFurniture — makes each authored stand-in furnit
+         ure piece pinchable.
+      2 -// Owns: one box collider + SIK Interactable per furniture root,
+        - sized from the piece's own                                     
+      3 -//       visual bounds, and the hover highlight. Reports pinches
+        - as onPinch(furnitureIndex).                                    
+      2 +// Owns: one "<Piece>_Hitbox" child per furniture piece (box col
+        +lider sized from the piece's                                    
+      3 +//       own box visuals + SIK Interactable), and the hover high
+        +light.                                                          
+      4 +//       Reports pinches as onPinch(furnitureIndex).            
+      5  // Expects: every child of `furnitureRoot` is one piece; each pi
+         ece has a child named "Slot"
+      6  //          (authored anchor on its top surface where the memory
+          object sits).
+      7  // Must not: decide what a pinch means (Main does).
+     ...
+      13    readonly pieces: SceneObject[] = []
+      14    readonly slots: SceneObject[] = []
+      15    readonly interactables: Interactable[] = []
+      15 -  private visuals: RenderMeshVisual[][] = []                   
+      16 +  private materials: (Material | null)[] = []                  
+      17    private readonly onPinchEvent = new Event<number>()
+      18    readonly onPinch = this.onPinchEvent.publicApi()
+      19  
+     ...
+      22        const piece = furnitureRoot.getChild(i)
+      23        this.pieces.push(piece)
+      24        this.slots.push(this.findChild(piece, "Slot") ?? piece)
+      25 +                                                               
+      26        const rmvs: RenderMeshVisual[] = []
+      27        this.collectVisuals(piece, rmvs)
+      26 -      this.visuals.push(rmvs)                                  
+      27 -      // Per-piece material clone so hover highlight affects on
+         -ly this piece.                                                 
+      28 +      // One material clone per piece so the hover highlight ti
+         +nts only this piece.                                           
+      29 +      let mat: Material | null = null                          
+      30        if (rmvs.length > 0) {
+      29 -        const mat = rmvs[0].mainMaterial.clone()               
+      31 +        mat = rmvs[0].mainMaterial.clone()                     
+      32 +        mat.mainPass.baseColor = baseColor                     
+      33          rmvs.forEach((r) => (r.mainMaterial = mat))
+      34        }
+      32 -      this.addCollider(piece, rmvs, debugColliders)            
+      33 -      const it = piece.createComponent(Interactable.getTypeName
+         -()) as Interactable                                            
+      34 -      it.targetingMode = 3   // direct + indirect: pinch from a
+         -cross the room or up close                                     
+      35 +      this.materials.push(mat)                                 
+      36 +                                                               
+      37 +      const b = this.localBounds(rmvs, piece)                  
+      38 +      const hit = global.scene.createSceneObject(`${piece.name}
+         +_Hitbox`)                                                      
+      39 +      hit.setParent(piece)                                     
+      40 +      hit.getTransform().setLocalPosition(b.min.add(b.max).unif
+         +ormScale(0.5))                                                 
+      41 +      const collider = hit.createComponent("Physics.ColliderCom
+         +ponent") as ColliderComponent                                  
+      42 +      const shape = Shape.createBoxShape()                     
+      43 +      shape.size = b.max.sub(b.min)                            
+      44 +      collider.shape = shape                                   
+      45 +      collider.debugDrawEnabled = debugColliders               
+      46 +      const it = hit.createComponent(Interactable.getTypeName()
+         +) as Interactable                                              
+      47 +      it.targetingMode = 3   // direct + indirect: pinch up clo
+         +se or from a few metres away                                   
+      48        this.interactables.push(it)
+      49      }
+      50    }
+      51  
+      39 -  /** Subscribe SIK events — call from Main inside OnStartEvent
+         -. */                                                           
+      52 +  /** Subscribe SIK events — Main calls this inside OnStartEven
+         +t. */                                                          
+      53    bindEvents(): void {
+      54      this.interactables.forEach((it, i) => {
+      55        it.onTriggerEnd.add(() => this.onPinchEvent.invoke(i))
+     ...
+       58      })
+       59    }
+       60  
+       48 -  private setTint(i: number, c: vec4): void {                 
+       49 -    const rmvs = this.visuals[i]                              
+       50 -    if (rmvs.length > 0) rmvs[0].mainMaterial.mainPass.baseCol
+          -or = c                                                        
+       61 +  /** Test/debug entry point: same path as a real pinch. */   
+       62 +  simulatePinch(i: number): void { this.onPinchEvent.invoke(i)
+          + }                                                            
+       63 +                                                              
+       64 +  indexOfName(name: string): number {                         
+       65 +    return this.pieces.findIndex((p) => p.name === name)      
+       66    }
+       67  
+       53 -  /** Box collider on the (unit-scale) piece root, covering al
+          -l its child box visuals. */                                   
+       54 -  private addCollider(piece: SceneObject, rmvs: RenderMeshVisu
+          -al[], debug: boolean): void {                                 
+       55 -    const inv = piece.getTransform().getInvertedWorldTransform
+          -()                                                            
+       56 -    let min = new vec3(1e9, 1e9, 1e9)                         
+       57 -    let max = new vec3(-1e9, -1e9, -1e9)                      
+       58 -    rmvs.forEach((r) => {                                     
+       59 -      const wmin = r.worldAabbMin()                           
+       60 -      const wmax = r.worldAabbMax()                           
+       61 -      // World AABB corners → piece-local space (piece is only
+          - yawed, so corners bound it well).                            
+       62 -      for (let k = 0; k < 8; k++) {                           
+       63 -        const c = new vec3(k & 1 ? wmax.x : wmin.x, k & 2 ? wm
+          -ax.y : wmin.y, k & 4 ? wmax.z : wmin.z)                       
+       64 -        const l = inv.multiplyPoint(c)                        
+       65 -        min = new vec3(Math.min(min.x, l.x), Math.min(min.y, l
+          -.y), Math.min(min.z, l.z))                                    
+       66 -        max = new vec3(Math.max(max.x, l.x), Math.max(max.y, l
+          -.y), Math.max(max.z, l.z))                                    
+       67 -      }                                                       
+       68 -    })                                                        
+       69 -    if (rmvs.length === 0) { min = new vec3(-30, 0, -30); max 
+          -= new vec3(30, 60, 30) }                                      
+       70 -    // Local AABB from world corners over-estimates for yawed 
+          -pieces; use the authored box                                  
+       71 -    // extents instead when every visual is axis-aligned in pi
+          -ece space.                                                    
+       72 -    const local = this.localBounds(rmvs, piece)               
+       73 -    if (local) { min = local.min; max = local.max }           
+       74 -                                                              
+       75 -    const collider = piece.createComponent("Physics.ColliderCo
+          -mponent") as ColliderComponent                                
+       76 -    const shape = Shape.createBoxShape()                      
+       77 -    shape.size = max.sub(min)                                 
+       78 -    collider.shape = shape                                    
+       79 -    collider.debugDrawEnabled = debug                         
+       80 -    // Collider sits on the piece root, so offset the shape vi
+          -a a child holder when not centered.                           
+       81 -    const center = min.add(max).uniformScale(0.5)             
+       82 -    if (center.length > 0.01) {                               
+       83 -      piece.removeComponent // (not available at runtime) — of
+          -fset handled below                                            
+       84 -      collider.destroy()                                      
+       85 -      const holder = global.scene.createSceneObject("Hitbox") 
+       86 -      holder.setParent(piece)                                 
+       87 -      holder.getTransform().setLocalPosition(center)          
+       88 -      const c2 = holder.createComponent("Physics.ColliderCompo
+          -nent") as ColliderComponent                                   
+       89 -      const s2 = Shape.createBoxShape()                       
+       90 -      s2.size = max.sub(min)                                  
+       91 -      c2.shape = s2                                           
+       92 -      c2.debugDrawEnabled = debug                             
+       93 -    }                                                         
+       68 +  private setTint(i: number, c: vec4): void {                 
+       69 +    const m = this.materials[i]                               
+       70 +    if (m) m.mainPass.baseColor = c                           
+       71    }
+       72  
+       96 -  /** Exact piece-local bounds of child boxes (unit box mesh =
+          - 1 cm, authored axis-aligned). */                             
+       97 -  private localBounds(rmvs: RenderMeshVisual[], piece: SceneOb
+          -ject): { min: vec3; max: vec3 } | null {                      
+       98 -    if (rmvs.length === 0) return null                        
+       73 +  /** Piece-local bounds of all child box visuals. */         
+       74 +  private localBounds(rmvs: RenderMeshVisual[], piece: SceneOb
+          +ject): { min: vec3; max: vec3 } {                             
+       75 +    if (rmvs.length === 0) return { min: new vec3(-30, 0, -30)
+          +, max: new vec3(30, 60, 30) }                                 
+       76      let min = new vec3(1e9, 1e9, 1e9)
+       77      let max = new vec3(-1e9, -1e9, -1e9)
+       78      const pieceInv = piece.getTransform().getInvertedWorldTran
+           sform()
+
+● Next, the UI. I'm putting the type scale and UIKit button/text helpers in one
+  shared module, then five focused panels: Start, PlacingCard, DotPrompt,
+  RevealLabel, and Lap.
+
+● Write(Assets\Scripts\RoomToRememberSharedUI.ts)
+  ⎿  Wrote 111 lines to Assets\Scripts\RoomToRememberSharedUI.ts
+      1 // RoomToRememberSharedUI — shared UIKit composition helpers for 
+        the Room to Remember UI modules.
+      2 // Owns: the type scale (applyTextRole), raw-Text factory for Fle
+        xLayout cells, and the
+      3 //       icon + label UIKit Button factory. Imported only by *UI.
+        ts modules.
+      4 // Must not: hold state or be imported by Main/controllers.
+      5 
+      6 import { FlexLayout } from "SpectaclesUIKit.lspkg/Scripts/Compone
+        nts/Layout2D/Flex/FlexLayout"
+     … +105 lines (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberStartUI.ts)
+  ⎿  Wrote 48 lines to Assets\Scripts\RoomToRememberStartUI.ts
+       1 // RoomToRememberStartUI — the doorway Start panel (title + big 
+         Start button).
+       2 // Owns: its BackPlate panel, layout, and the Start button. Pass
+         ive view.
+       3 // API: show(), hide(), isShown(); event onStart.
+       4 // Must not: hold game state.
+       5 
+       6 import { BackPlate } from "SpectaclesUIKit.lspkg/Scripts/BackPla
+         te"
+       7 import { FlexAlign, FlexDirection } from "SpectaclesUIKit.lspkg/
+     … +42 lines (~2 KB) (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberPlacingCardUI.ts)
+  ⎿  Wrote 103 lines to Assets\Scripts\RoomToRememberPlacingCardUI.ts
+       1 // RoomToRememberPlacingCardUI — the lazily-following "what am I
+          placing" card.
+       2 // Owns: card BackPlate + layout ("1 of 6 · Olfactory", instruct
+         ion line, a model anchor cell
+       3 //       Main drops a tiny copy of the object into), and its own
+          lazy follow of the camera.
+       4 // API: show(), hide(), setItem(text), getItemText(), getModelAn
+         chor(), snapToView(); no events.
+       5 // Must not: hold game state.
+       6 
+     … +97 lines (ctrl+o to expand)
+
+  Ran 5 shell commands (ctrl+o to expand)
+
+● Status: about two-thirds of the scripts are written. I just caught a direction
+  bug, where the placing card would have floated behind you. Fixing it, then
+  writing the remaining UI panels.
+
+● Update(Assets\Scripts\RoomToRememberPlacingCardUI.ts)
+  ⎿  Added 2 lines, removed 2 lines
+      77    private target(): vec3 | null {
+      78      if (!this.camTr) return null
+      79      const pos = this.camTr.getWorldPosition()
+      80 -    const back = this.camTr.back   // camera looks down its -Z;
+         - back points behind                                            
+      81 -    const fwd = new vec3(-back.x, 0, -back.z)                  
+      80 +    const f = this.camTr.forward   // Transform.forward is loca
+         +l +Z; the camera looks down -forward                           
+      81 +    const fwd = new vec3(-f.x, 0, -f.z)                        
+      82      const flat = fwd.length > 0.001 ? fwd.normalize() : new vec
+          3(0, 0, -1)
+      83      return pos.add(flat.uniformScale(this.followDistanceCm)).ad
+          d(new vec3(0, -this.dropBelowEyeCm, 0))
+      84    }
+
+● Write(Assets\Scripts\RoomToRememberDotPromptUI.ts)
+  ⎿  Wrote 128 lines to Assets\Scripts\RoomToRememberDotPromptUI.ts
+       1 // RoomToRememberDotPromptUI — the "1 of 6" label and the two bi
+         g buttons beside the next dot.
+       2 // Owns: step label, the Hint/Reveal pair and the Got it/Missed 
+         pair (only one pair visible),
+       3 //       billboarding toward the user. Passive view.
+       4 // API: showAt(worldPos), hide(), isShown(), setStep(text), getS
+         tep(), setMode("recall"|"grade"),
+       5 //      getMode(), setHintAvailable(bool), isHintAvailable().
+       6 // Events: onHint, onReveal, onGotIt, onMissed.
+       7 // Must not: hold game state or decide what a press means.
+     … +121 lines (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberRevealLabelUI.ts)
+  ⎿  Wrote 52 lines to Assets\Scripts\RoomToRememberRevealLabelUI.ts
+      1 // RoomToRememberRevealLabelUI — the small "I · Olfactory · smell
+        " label above a revealed object.
+      2 // Owns: its plate + text, billboarding. Passive view.
+      3 // API: showAt(worldPos, text), hide(), isShown(), getText().
+      4 // Must not: hold game state.
+      5 
+      6 import { BackPlate } from "SpectaclesUIKit.lspkg/Scripts/BackPlat
+        e"
+      7 import { FlexAlign, FlexDirection } from "SpectaclesUIKit.lspkg/S
+        cripts/Components/Layout2D/Flex/FlexTypes"
+     … +45 lines (ctrl+o to expand)
+
+● Write(Assets\Scripts\RoomToRememberLapUI.ts)
+  ⎿  Wrote 140 lines to Assets\Scripts\RoomToRememberLapUI.ts
+       1 // RoomToRememberLapUI — end-of-lap score, the Walk again button
+         , and the final
+       2 // "Now walk it from memory" message.
+       3 // Owns: three surfaces (ScoreCard, WalkAgainButton, MemoryCard)
+          and their timed fades.
+       4 // API: placeAt(worldPos), showScore(correct, total), isScoreSho
+         wn(), getScoreText(),
+       5 //      showWalkAgain(), hideWalkAgain(), isWalkAgainShown(), sh
+         owFromMemory(), isFromMemoryShown(),
+       6 //      hideAll(). Event: onWalkAgain.
+     … +134 lines (ctrl+o to expand)
+
+● Now the main orchestrator. It wires the state, furniture, visuals, audio, and
+  five UI panels together and runs the place → recall → reveal → grade loop.
+
+● Write(Assets\Scripts\RoomToRememberMain.ts)
+  ⎿  Wrote 342 lines to Assets\Scripts\RoomToRememberMain.ts
+      1 // RoomToRememberMain — orchestrates the Room to Remember memory 
+        palace.
+      2 // Owns: lifecycle + event wiring, the place → recall → reveal → 
+        grade → lap loop, proximity to
+      3 //       the next dot, and pushing state into the UI views. Game 
+        state itself lives in
+      4 //       RoomToRememberState; visuals in RoomToRememberMemoryObje
+        cts; sound in RoomToRememberAudio;
+      5 //       furniture pinching in RoomToRememberFurniture.
+      6 // Expects (@input, wired by the scene bootstrap): the five UI mo
+     … +337 lines (~14 KB) (ctrl+o to expand)
+
+● All scripts are written. Compiling:
+
+  Called lens-studio (ctrl+o to expand)
+
+● My scripts are error-free; the errors all come from LEAF 4.0, which imports
+  InteractionKit.lspkg instead of this project's SpectaclesInteractionKit.lspkg.
+  Next I'm checking LEAF's declared dependencies.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● LEAF 4.0 requires InteractionKit 4.0, which conflicts with this project's SIK
+  2.0 and UIKit 2.0, so I'm looking for an older LEAF release built for SIK 2.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● LEAF 2.0.2 should match this project's SIK 2.0. That's a smaller change than
+  upgrading your SIK and UIKit to 4.0, which the LEAF skill says to ask you
+  about first. I'll swap LEAF 4.0 for 2.0.2.
+
+  Called lens-studio 4 times, ran 1 shell command (ctrl+o to expand)
+
+● I can't find a clean API to remove the package, so I'll install LEAF 2.0.2
+  directly. The package installer normally replaces an existing version of the
+  same package.
+
+  Called lens-studio, ran 1 shell command (ctrl+o to expand)
+
+● Both LEAF versions now sit side by side, and v2.0.2 does target SIK 2.0.0. I'm
+  removing both package files and reinstalling only v2.0.2 under the clean
+  name.
+
+  Called lens-studio 2 times, ran 2 shell commands (ctrl+o to expand)
+
+● Everything compiles cleanly now, including all 12 of my scripts. I'll confirm
+  the cached LEAF is actually v2.0.2.
+  Ran 1 shell command (ctrl+o to expand)
+
+● LEAF 2.0.2 is installed and the project compiles, so I'm building the stand-in
+  room and UI panels next, generating the instruction JSON by script for exact
+  geometry.
+
+  Called lens-studio, ran 2 shell commands (ctrl+o to expand)
+
+● Phase A applied with no errors. Recompiling so the script inputs register,
+  then checking the structure landed.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● Only 11 objects were added out of 46. I suspect the entries without an id were
+  silently skipped. I'll check.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Entries without an id had collapsed into one empty "Seat", and the probe was
+  never removed. I'm regenerating the instructions with a unique id per entry,
+  then cleaning up the stray Seat and probe.
+
+  Called lens-studio, ran 2 shell commands (ctrl+o to expand)
+
+● That landed cleanly: 37 objects and all components. Recompiling, then checking
+  how the script inputs appear so I can wire them.
+
+  Called lens-studio, ran 1 shell command (ctrl+o to expand)
+
+● Inputs are registered. Phase B wires the main script to the five UI modules,
+  the furniture root, and the dot assets:
+
+  Called lens-studio (ctrl+o to expand)
+
+● Wrong path form. Script inputs go under components.ScriptComponent.<input>.
+  Retrying with that:
+
+  Called lens-studio (ctrl+o to expand)
+
+● All nine inputs are wired. Running the Lens to check runtime logs:
+
+  Called lens-studio (ctrl+o to expand)
+
+● No errors, but my "ready" log didn't show up. I'll read the log tail to see
+  whether the main script started.
+
+  Called lens-studio (ctrl+o to expand)
+
+● The cause is UIKit's FlexLayout auto-discovering child items and throwing if
+  addItems runs too early. Since panels are built in onAwake, I'll rely on
+  auto-discovery and register items manually only after layout initialization.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● FlexLayout has no public "initialized" getter, so registerItem becomes a no-op
+  and auto-discovery handles it. All my items exist before OnStart, so that's
+  safe.
+
+● Update(Assets\Scripts\RoomToRememberSharedUI.ts)
+  ⎿  Added 7 lines, removed 4 lines
+      100    return btn
+      101  }
+      102  
+      103 -export function registerItem(parent: SceneObject, item: FlexIt
+          -em): void {                                                   
+      104 -  const f = parent.getComponent(FlexLayout.getTypeName()) as F
+          -lexLayout | null                                              
+      105 -  if (f) f.addItems([item])                                   
+      106 -}                                                             
+      103 +/**                                                           
+      104 + * Every panel here is built in onAwake, before its FlexLayout
+          +s initialize, so the layouts'                                 
+      105 + * default autoDiscoverItemsOnStart picks the FlexItem childre
+          +n up on start. Calling addItems                               
+      106 + * pre-init throws ("Cannot add items while autoDiscoverItemsO
+          +nStart is enabled…"), so this is                              
+      107 + * intentionally a no-op kept as the single place to change if
+          + a panel is ever built lazily.                                
+      108 + */                                                           
+      109 +export function registerItem(_parent: SceneObject, _item: Flex
+          +Item): void {}                                                
+      110  
+      111  export function setTextAlpha(t: Text, a: number): void {
+      112    const c = t.textFill.color
+
+  Called lens-studio 3 times (ctrl+o to expand)
+
+● The Lens runs clean and logs "ready". Next I'll look at what the user sees
+  from the doorway.
+
+  Read 1 file, called lens-studio (ctrl+o to expand)
+
+● The doorway view checks out, with the Start panel about 1 m ahead and the
+  stand-in TV and lamp visible. I'm confirming the v2.0.2 API names before
+  running the LEAF tests, since my reference was written for v4.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● The API matches. Writing the LEAF test helper and the five scenarios, one per
+  done criterion.
+
+● Write(Assets\Tests\RoomToRememberLeafInteractor.ts)
+  ⎿  Wrote 83 lines to Assets\Tests\RoomToRememberLeafInteractor.ts
+       1 // RoomToRememberLeafInteractor — shared LEAF helpers for the Ro
+         om to Remember scenarios.
+       2 // Drives the Lens only through SIK interactables (buttons, furn
+         iture hitboxes) plus the Lens's
+       3 // one documented test hook, RoomToRememberMain.setViewerOverrid
+         e(), which stands in for walking
+       4 // (LEAF cannot move the preview camera).
+       5 // Every scenario expects a FRESH Lens (preview reset) — it star
+         ts at the doorway Start panel.
+       6 
+     … +77 lines (ctrl+o to expand)
+
+● Write(Assets\Tests\RoomToRememberScenarios.ts)
+  ⎿  Wrote 188 lines to Assets\Tests\RoomToRememberScenarios.ts
+       1 // Room to Remember — one LEAF scenario per done criterion in de
+         vpost/design-brief.md.
+       2 // Each scenario needs a fresh Lens: reset the preview before ru
+         nning it.
+       3 
+       4 import { Scenario } from "Leaf.lspkg/Scenarios/scenario/Scenario
+         "
+       5 import { expect } from "Leaf.lspkg/Utils/common/Expect"
+       6 import { findInteractablesByName } from "Leaf.lspkg/Interactors/
+         InteractableUtils"
+     … +182 lines (ctrl+o to expand)
+
+● Write(Assets\Tests\LeafIndex.ts)
+  ⎿  Wrote 23 lines to Assets\Tests\LeafIndex.ts
+       1 // LeafIndex — registers the Room to Remember LEAF scenarios (on
+         e per design-brief done criterion).
+       2 
+       3 import { scenariosIndex } from "Leaf.lspkg/Scenarios/decorator/S
+         cenarioIndexDecorator"
+       4 import { ScenarioMetadata } from "Leaf.lspkg/Scenarios/scenario/
+         ScenarioMetadata"
+       5 import {
+       6   RtrC1PlaceFirstScenario,
+       7   RtrC2AllPlacedScenario,
+     … +16 lines (ctrl+o to expand)
+
+  Called lens-studio (ctrl+o to expand)
+
+● One component per file is required. Splitting the scenarios into five files:
+
+  Called lens-studio, ran 2 shell commands (ctrl+o to expand)
+
+● Tests compile. Attaching LeafIndex to the scene:
+  Called lens-studio 5 times (ctrl+o to expand)
+
+● All five scenarios are registered. Running C1 against the fresh Lens:
+
+  Called lens-studio (ctrl+o to expand)
+
+● C1 passes. Each scenario needs a fresh Lens, so I'll reset the preview before
+  each run.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● C2 passed, but the log showed spatial audio is missing an Audio Listener on
+  the camera, so hint sounds aren't positioned yet. I'll fix that after the test
+  pass, and I'm running C3 now.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● C3 passes. Before trusting a string of "succeeded" results, I'll also check
+  the LEAF logs to confirm the assertions actually ran. Running C4:
+
+  Called lens-studio 2 times, ran 4 shell commands (ctrl+o to expand)
+
+● The logs confirm the scenarios really drove the Lens: placements on each
+  piece, then lap start, then completion. Running C5, the longest one (two full
+  laps):
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● All five pass. As a negative control, I'll run C1 against this non-fresh Lens.
+  Its fresh-state guard should throw, which proves the harness really reports
+  failures:
+
+  Called lens-studio, ran 1 shell command (ctrl+o to expand)
+
+● The control passed when I expected a failure, which could mean LEAF resets the
+  Lens before each run or that failures aren't being reported. I'm checking the
+  log next.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● LEAF resets the Lens before each run, so my control never tripped the guard.
+  To prove failures get reported, I'll add a temporary failing scenario, run it,
+  then delete it.
+
+● Write(Assets\Tests\RtrZControlScenario.ts)
+  ⎿  Wrote 12 lines to Assets\Tests\RtrZControlScenario.ts
+       1 // TEMPORARY negative control — proves the harness reports a fai
+         led expect(). Deleted after use.
+       2 import { Scenario } from "Leaf.lspkg/Scenarios/scenario/Scenario
+         "
+       3 import { expect } from "Leaf.lspkg/Utils/common/Expect"
+       4 import { RoomToRememberLeafInteractor } from "./RoomToRememberLe
+         afInteractor"
+       5 
+       6 @component
+       7 export class RtrZControlScenario extends Scenario {
+     … +5 lines (ctrl+o to expand)
+
+● Update(Assets\Tests\LeafIndex.ts)
+  ⎿  Added 1 line
+      17      { id: "c3-approach-shows-prompt", typename: RtrC3ApproachSc
+          enario.getTypeName() },
+      18      { id: "c4-hint-reveal-grade", typename: RtrC4HintRevealGrad
+          eScenario.getTypeName() },
+      19      { id: "c5-laps-score-and-from-memory", typename: RtrC5LapsS
+          cenario.getTypeName() },
+      20 +    { id: "z-negative-control", typename: RtrZControlScenario.g
+         +etTypeName() },                                                
+      21    ]
+      22  }
+
+● Update(Assets\Tests\LeafIndex.ts)
+  ⎿  Added 1 line
+       7  import { RtrC3ApproachScenario } from "./RtrC3ApproachScenario"
+       8  import { RtrC4HintRevealGradeScenario } from "./RtrC4HintReveal
+          GradeScenario"
+       9  import { RtrC5LapsScenario } from "./RtrC5LapsScenario"
+      10 +import { RtrZControlScenario } from "./RtrZControlScenario"    
+      11  
+      12  @component
+      13  export class LeafIndex extends BaseScriptComponent {
+
+  Called lens-studio 3 times (ctrl+o to expand)
+
+● The control fails as expected, so the five passes are real. I'm removing the
+  temporary control and adding an Audio Listener to the camera so the hint
+  sounds come from their spots.
+
+  Called lens-studio 2 times, ran 3 shell commands (ctrl+o to expand)
+
+● The Audio Listener is added. Now the visual check (see-and-fix). I'll run C1
+  to put the Lens in its "first object placed" state and capture what's there.
+
+  Read 1 file, called lens-studio 3 times (ctrl+o to expand)
+
+● Two problems showed up in that capture: the placing card sits at the bottom
+  edge with small text, and the mini model is hard to read. I'm turning the
+  preview camera toward the couch to check the placed nose before fixing them.
+
+  Called lens-studio 3 times (ctrl+o to expand)
+
+● No errors, so it was a transient preview state. Retrying the screenshot:
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● The LEAF preview is still stuck at "not ready", so I'm moving the placing card
+  10 cm below eye level and enlarging its text before redoing the visual pass.
+
+● Update(Assets\Scripts\RoomToRememberPlacingCardUI.ts)
+  ⎿  Added 2 lines, removed 1 line
+      17    @ui.group_start("Settings")
+      18    @input @hint("Distance in front of the user (cm)") @widget(ne
+          w SliderWidget(40, 100, 1))
+      19    followDistanceCm: number = 60
+      20 +  // Brief default was 20 cm; at 60 cm away that is ~18° down, 
+         +the bottom edge of the Specs view.                             
+      21    @input @hint("How far below eye level the card floats (cm)") 
+          @widget(new SliderWidget(0, 40, 1))
+      21 -  dropBelowEyeCm: number = 20                                  
+      22 +  dropBelowEyeCm: number = 10                                  
+      23    @input @hint("Follow lag: higher = snappier") @widget(new Sli
+          derWidget(0.5, 8, 0.1))
+      24    followSpeed: number = 2.0
+      25    @input @hint("Instruction line under the item name")
+
+● Update(Assets\Scripts\RoomToRememberPlacingCardUI.ts)
+  ⎿  Added 2 lines, removed 2 lines
+      51      colItem.overrideWidth = 11
+      52      colItem.overrideHeight = 8
+      53      registerItem(row.so, colItem)
+      54 -    this.itemText = addText(col.so, "PlacingItemText", "6 of 6 
+         -· Oculomotor", "Headline2", 11, 3, 60, new vec4(1, 1, 1, 1))   
+      55 -    addText(col.so, "PlacingInstruction", this.instruction, "Ca
+         -ption", 11, 3, 60, new vec4(1, 1, 1, 0.65))                    
+      54 +    this.itemText = addText(col.so, "PlacingItemText", "6 of 6 
+         +· Oculomotor", "HeadlineXL", 11, 3, 60, new vec4(1, 1, 1, 1))  
+      55 +    addText(col.so, "PlacingInstruction", this.instruction, "Bo
+         +dy", 11, 3, 60, new vec4(1, 1, 1, 0.7))                        
+      56  
+      57      this.createEvent("OnStartEvent").bind(() => {
+      58        this.camTr = WorldCameraFinderProvider.getInstance().getT
+          ransform()
+
+  Called lens-studio (ctrl+o to expand)
+
+● The compile is failing because of AiPreviewAgentInspect.lspkg, which my
+  CaptureRuntimeViewTool call auto-installed and which targets the v4 kits. I'm
+  removing that package and whatever it added to the scene.
+
+  Called lens-studio, ran 1 shell command (ctrl+o to expand)
+
+● The tool added three incompatible packages and a stray scene object at 08:46,
+  so I'm removing all four while keeping the LEAF Plugin Bridge object that LEAF
+  needs.
+  Called lens-studio 2 times, ran 1 shell command (ctrl+o to expand)
+
+● The project compiles cleanly now. For visual checks I'll stick to the preview
+  camera and screenshots, since the runtime-capture tools install an
+  incompatible agent; next I'll run C1 and check the couch.
+
+  Read 1 file, called lens-studio 5 times (ctrl+o to expand)
+
+● The placing card and mini eyeball look clear now, though the nose still reads
+  as a giant nose on legs. I'm checking the view from the room-centre side next,
+  where the recall walk happens.
+
+  Read 1 file (ctrl+o to expand)
+
+● The nose orientation checks out, so next I'll run C2 and move the preview
+  camera to about 1 m from the couch dot to test real proximity detection.
+
+  Called lens-studio 2 times (ctrl+o to expand)
+
+● C2 failed this time. My guess is that I left the preview camera next to the
+  couch, so the real proximity check grew dot 0 to 10 cm. I'll check the log to
+  confirm before changing anything.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The dot size check failed because the real camera was near the couch and the
+  dot was still growing, so this is a test-robustness problem rather than a Lens
+  bug. I'll have C2 stand at the doorway before rechecking the dot sizes,
+  starting with a screenshot at about 1 m from the couch.
+
+  Called lens-studio (ctrl+o to expand)
+
+● Update(Assets\Tests\RtrC2AllPlacedScenario.ts)
+  ⎿  Added 1 line
+      12      const m = await it.waitReady()
+      13      it.requireFresh(m)
+      14      await it.placeAll(m)
+      15 +    await it.walkToDoorway(m)   // don't depend on where the pr
+         +eview camera was left                                          
+      16      expect(m.state.phase).toBe("recall")
+      17      expect(m.state.lapNumber).toBe(1)
+      18      expect(m.placingCard.isShown(), "placing card hidden after 
+          the sixth").toBe(false)
+
+● Update(Assets\Tests\RtrC2AllPlacedScenario.ts)
+  ⎿  Added 1 line
+      23        expect(dot !== null && dot.name === `Dot_${i}`, `dot ${i}
+           numbered in route order`).toBe(true)
+      24        expect(m.memory.getDotSizeCm(i)).toBeCloseTo(6, 1)
+      25      }
+      26 +    m.setViewerOverride(null)                                  
+      27    }
+      28  }
+
+  Read 1 file (ctrl+o to expand)
+
+● The lookAt gave a flipped camera that showed the back of the couch, so I'll
+  place the camera by hand: about 1 m from the couch on the walking side, facing
+  it, tilted down about 40°.
+
+  Read 1 file, called lens-studio 2 times (ctrl+o to expand)
+
+● The shot had no dots because the test-file edit recompiled and reset the Lens,
+  so I'm re-running the fixed C2 and then switching to the camera's orbit mode
+  around the couch dot.
+
+  Called lens-studio 3 times (ctrl+o to expand)
+
+● Fixed C2 passes. Taking a doorway screenshot of the dots, then orbiting to the
+  couch:
+
+  Read 1 file, called lens-studio 3 times (ctrl+o to expand)
+
+● From the doorway the dots are plain white points on the TV stand and the lamp,
+  with no labels or answers, as the brief asks. Now the orbit shot near the
+  couch:
+
+  Read 1 file (ctrl+o to expand)
+
+● The angle check came out top-down and upside-down, but it confirmed that with
+  the real preview camera about 1 m away, the couch dot and Hint/Reveal buttons
+  appear, so real proximity works. Next I'll run the static checks and re-run
+  all five tests on the final build.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Static checks are clean. Running the final test pass, all five scenarios on
+  the final build:
+
+  Called lens-studio 5 times (ctrl+o to expand)
+
+● C1–C4 pass. The C5 tool call hit the MCP timeout, since that scenario runs two
+  full laps and takes about 45 s. I'll read its actual result from the LEAF
+  log.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● That grep also picked up the earlier 08:43 run. Checking only the run that
+  started at 08:55:10:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All five pass on the final build. Saving the project:
+
+  Called lens-studio, ran 1 shell command, wrote 1 memory (ctrl+o to expand)
+
+● I built the Lens and wrote one LEAF test per done criterion. All five pass on
+  the final build in the Lens Studio preview, and the project is saved. To make
+  sure "passed" means something, I also ran a test with a deliberately false
+  check, and it was correctly reported as failed.
+
+  ┌─────┬──────────────────────────────────────────────────────────┬────────┐
+  │  #  │                      Done criterion                      │ Result │
+  ├─────┼──────────────────────────────────────────────────────────┼────────┤
+  │     │ Start shows "1 of 6 · Olfactory"; pinching the couch     │ ✅     │
+  │ 1   │ drops the nose there with its sniff; the card moves to   │ pass   │
+  │     │ "2 of 6 · Optic"                                         │        │
+  ├─────┼──────────────────────────────────────────────────────────┼────────┤
+  │ 2   │ After all six are placed, they shrink into glowing dots  │ ✅     │
+  │     │ and the recall lap starts                                │ pass   │
+  ├─────┼──────────────────────────────────────────────────────────┼────────┤
+  │     │ From the doorway the dots show nothing else; within      │ ✅     │
+  │ 3   │ about 1.5 m the next dot shows "1 of 6" with Hint and    │ pass   │
+  │     │ Reveal                                                   │        │
+  ├─────┼──────────────────────────────────────────────────────────┼────────┤
+  │     │ Hint plays the sound from the object's spot; a second    │        │
+  │ 4   │ Hint shows the outline; Reveal shows object and label    │ ✅     │
+  │     │ and swaps in Got it / Missed; the dot turns green or     │ pass   │
+  │     │ orange                                                   │        │
+  ├─────┼──────────────────────────────────────────────────────────┼────────┤
+  │     │ Score "5 of 6" shows and fades after about 3 s, with     │        │
+  │ 5   │ Walk again; the missed nose comes back 1.5× bigger; six  │ ✅     │
+  │     │ right hides every dot and shows "Now walk it from        │ pass   │
+  │     │ memory"                                                  │        │
+  └─────┴──────────────────────────────────────────────────────────┴────────┘
+
+  Every criterion has a test. Each test starts from a fresh Lens.
+
+  What's in the scene
+  - Stand-in room: six grey pieces in your route order (couch, coffee table, TV,
+    floor lamp, bookshelf, armchair), 2 m apart in a loop, with the doorway as
+    the start. It's grouped under StandInRoom_PreviewOnly so it's obvious.
+  - Objects and sounds: six generated objects about 33–48 cm tall, and 12 sounds
+    (one per object, plus pop, chimes, sparkle and button click). There's no
+    background music, since it's a study tool.
+  - UI: five panels built with Spectacles UI Kit (Start, placing card, dot
+    prompt, reveal label, lap score). There's also the Hint ladder, the 1.5× and
+    2× miss sizes with wobble and sparkles, orange pulsing for missed dots, the
+    chime from the next dot, and the final "from memory" mode where pinching
+    furniture shows its object for 3 s.
+  - Code: in Assets/Scripts/ (main script RoomToRememberMain.ts), with the tests
+    in Assets/Tests/.
+
+  Where I departed from the brief
+  - Placing card height: it sits 10 cm below eye level, not 20. At 20 cm it
+    landed on the bottom edge of the Specs view in the preview.
+  - Test hook: LEAF can't move the camera, so the main script has one hook,
+    setViewerOverride(), that the tests use to stand in for walking. I also
+    moved the real preview camera next to the couch: its dot grew and the
+    Hint/Reveal buttons appeared.
+  - Floor lamp: its object sits on top of the shade, which is close to eye
+    height.
+  - LEAF version: I used 2.0.2, not the latest 4.0. Version 4 needs newer
+    interaction and UI kits than this project uses, so it wouldn't compile.
+    Upgrading the kits is your call.
+
+  Not checked yet
+  - Four of the six objects: I only looked at the nose and the eyeball in the
+    preview. The nose came out as a nose-headed character on little legs, and
+    the eyeball has legs and hair. Both still read clearly. I haven't looked at
+    the eyeball on wheels, the pulley, the three-headed creature or the UFO,
+    which the brief flagged as risky.
+  - Sounds: they're synthesized and I haven't listened to them. I added the
+    Audio Listener to the camera that the preview warned about, so sounds now
+    come from each object's spot, but how they sound is unproven.
+  - Not covered by tests: the chime direction, the next-lap orange pulse, the 2×
+    size and sparkles after two misses, and the placing card following you.
+  - Feel unproven (needs real glasses): whether 1.5 m is the right distance, how
+    far down you have to look at couch-height buttons (about 45° from 1 m
+    away), and how well real hand tracking pinches furniture.
+
+  Two incidents, both cleaned up: the preview capture tool silently installed
+  three packages built for the newer kits, which broke the compile, so I removed
+  them. My first scene setup call also collapsed objects that lacked an id; I
+  corrected that with a second call.
+
+  For "Judge it", open Interactive Preview: WASD to walk, right-drag to look,
+  click to pinch. Then look at those four unchecked objects from the room centre
+  at about 1.5 m.
+
+✻ Baked for 51m 50s · done 8:56 AM
+
+※ recap: Room to Remember is built for Specs, and all five LEAF tests for your done criteria pass in the preview. Next, open Interactive Preview and check the four objects I haven't looked at: the eyeball on wheels, pulley, three-headed creature and UFO. (disable recaps in /config)
