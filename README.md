@@ -2,7 +2,43 @@
 
 **A memory palace for Snap Spectacles.** Walk your own living room, drop weird, giant, cartoonish objects onto real furniture, then walk the route again and recall them in order. This version teaches the **first six cranial nerves (I–VI)**, a classic ordered list medical students have to memorize.
 
-Built with [Lens Studio](https://ar.snap.com/lens-studio) 5.23 for **Spectacles**, using the Spectacles Interaction Kit (SIK), Spectacles UI Kit and the LEAF testing framework. Created for the [Learn Specs hackathon](https://learn-specs.devpost.com/).
+Built with [Lens Studio](https://ar.snap.com/lens-studio) 5.23 for **SPECS**, using the Spectacles Interaction Kit (SIK), Spectacles UI Kit and the LEAF testing framework. Planned with the Devpost Learn `plan-lens` skill and built by an AI coding agent through **CLAD** and the **Lens Studio MCP**. Created for [Learn AR with SPECS](https://learn-specs.devpost.com/).
+
+▶️ **Demo video:** _add your YouTube link here_  
+📐 **Design brief:** [`devpost/design-brief.md`](devpost/design-brief.md)  
+✅ **Tests:** 5 of 5 LEAF scenarios pass in the Lens Studio preview
+
+---
+
+## 👩‍⚕️ Who it's for
+
+**Medical and nursing students** who have to memorize long, ordered lists: cranial nerves, drug classes, the brachial plexus. Flashcards drill the words. A memory palace ties them to *places*, and the order you walk becomes the order you remember. The same approach works for anyone memorizing an ordered list, such as vocabulary, the key points of a speech, or exam facts.
+
+## 🕶️ Why it needs glasses
+
+The memory palace (the *method of loci*) is the technique memory champions rely on. It works because your brain is very good at remembering *where* things are in places you already know. In a 2017 study in *Neuron* (Dresler et al.), six weeks of method-of-loci training took ordinary people from recalling 26–30 words to recalling about 35 more on average, and they still kept a gain of over 20 words four months later.
+
+The catch is that you have to imagine the objects yourself. Room to Remember puts them in your room for you:
+
+| Glasses strength | How Room to Remember uses it |
+|---|---|
+| **Draws in the world** | Each memory object sits *on* a real piece of your furniture, at real size, not on a floating panel. |
+| **Leaves your body free** | You physically walk your own route with your hands free and your eyes up. The walking *is* the memorizing. |
+| **Shares your view** | The dots respond to where you go: they stay silent from the doorway and only open when you walk up to them. |
+
+A phone puts a screen between you and the room. VR puts you in an unfamiliar room, which defeats a technique built on familiar places. Glasses are the only medium where the palace is your actual home.
+
+## 🎨 Design decisions
+
+These follow the AR-for-glasses habits from the Learn AR with SPECS concept video:
+
+- **Show only what's needed now.** From the doorway you see six small dots and nothing else. A dot shows `N of 6` only when you're within about 1.5 m, the answer appears only when you ask for it, and there are no walls of text.
+- **Guide without leading.** Hints escalate gently: first a sound from the object's exact spot, then a faint outline, then the full reveal.
+- **A few big targets.** At most two big buttons are on screen at a time (Hint / Reveal, then Got it / Missed). Placing an object means pinching the furniture itself, the biggest target in the room.
+- **Out of view gets a sound, not a panel.** After grading, a soft chime plays from the next dot's direction.
+- **Forget it, and it gets weirder.** Distinctive things are easier to remember, so a missed object returns 1.5× bigger and wobbling, then 2× with sparkles.
+- **The Lens makes itself unnecessary.** Once you get all six right, everything disappears. On exam day you won't have the glasses, so the last lap trains you to walk the palace from memory.
+- **Built for an additive display.** The stand-in furniture is light grey and the memory objects are bright and cartoonish, because black renders as transparent on SPECS.
 
 ---
 
@@ -104,7 +140,7 @@ One LEAF scenario per design-brief done criterion, registered in `LeafIndex.ts`:
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/<your-username>/RoomToRemember.git
+   git clone https://github.com/rohanjain1648/RoomToRemember.git
    ```
 2. Open `RoomToRemember.esproj` in Lens Studio. It regenerates `Cache/`, `Support/`, `Workspaces/` and `PluginsUserPreferences/` on first open, which is why they are git-ignored.
 3. Open `Assets/Scene.scene` and press **Preview**.
@@ -144,9 +180,30 @@ Generated 3D models may not read perfectly at 1.5 m. The three-headed creature a
 
 The Lens does not record, identify or follow people.
 
-## 🤖 Built with AI agents
+## 🤖 How it was built
 
-The design brief in [`devpost/design-brief.md`](devpost/design-brief.md) was produced with the `plan-lens` skill and the build was done with the Lens Studio agent toolkit (CLAD). Local agent state, MCP configs (`.mcp.json`, `.cursor/`, `.vscode/`, `.codex/`) and the Spectacles debug key are git-ignored on purpose, because they can contain tokens or private keys.
+1. **Plan with the Devpost Learn skill pack.** The `plan-lens` skill interviewed me in seven questions about the idea, the one spatial moment, the stand-in for the preview, where things live, hands, when things show, and the done criteria. Its answers became [`devpost/design-brief.md`](devpost/design-brief.md).
+2. **Build with CLAD.** In a fresh Claude Code session inside this project, CLAD read the brief and built the Lens through the Lens Studio MCP. It laid out the stand-in room, generated the six 3D memory objects and twelve sound effects, built the world-space UI with SIK and UI Kit, and wrote the TypeScript state machine.
+3. **Test with LEAF.** CLAD wrote one LEAF scenario per done criterion and ran them in the preview: 5 of 5 pass. To make sure "pass" meant something, it also ran a scenario with a deliberately false check, which correctly failed.
+4. **Judge it.** I walked the full flow in Interactive Preview (WASD to walk, click to pinch) to check placement, readability and pacing from where a user would stand.
+
+### How the skill pack helped
+
+The interview turned a rough idea into specific design decisions:
+
+- It asked me to picture the **one moment** the Lens is at its best. That became the doorway with six silent dots.
+- It asked **how I'd say "I remember this one"**. That became reveal-then-grade instead of trusting a button press.
+- It flagged that the preview **can't see my real couch**. That produced the grey stand-in room, marked as preview-only.
+- It made me write **done criteria I could check by walking and clicking**. Those became the five LEAF tests.
+
+### What I learned
+
+- **Designing for glasses is subtraction.** Most of the design work was deciding what *not* to show, and when.
+- **A good brief is the real product spec.** The agent built almost exactly what the interview made me decide, including the defaults I hadn't thought about, which the brief marked `(default)` so I could review them.
+- **Tests make an agent's "done" trustworthy.** "All five LEAF tests pass" means something because each test maps to a sentence in the brief.
+- **Separate "logic proven" from "feel unproven".** The preview proves the flow works. Only real glasses can prove comfort, trigger distance and hand-tracking feel.
+
+Local agent state, MCP configs (`.mcp.json`, `.cursor/`, `.vscode/`, `.codex/`) and the SPECS debug key are git-ignored on purpose, because they can contain tokens or private keys.
 
 ## 🛠 Tech stack
 
