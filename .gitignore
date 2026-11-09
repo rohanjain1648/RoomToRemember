@@ -1,0 +1,38 @@
+# BEGIN Lens Studio managed Agents-Docs block
+.mcp.json
+.cursor/mcp.json
+.vscode/mcp.json
+.codex/config.toml
+.claude/settings.local.json
+# END Lens Studio managed Agents-Docs block
+
+# Added by Lens Studio (LEAF plugin)
+leaf_plugin_settings.json
+
+# ---- Lens Studio generated / local-only ----
+Cache/
+Support/
+Workspaces/
+PluginsUserPreferences/
+*.esproj.*.lock
+RoomToRemember.esproj.*.lock
+
+# ---- Secrets (NEVER commit) ----
+spk_debug_key.pem
+*.pem
+*.key
+.env
+.env.*
+
+# ---- AI agent local state / logs ----
+.remember/
+.claude/settings.local.json
+.icon_tmp/
+
+# ---- Scratch / OS / editor junk ----
+tempAssetGen/
+*.stackdump
+*.log
+Thumbs.db
+Desktop.ini
+.DS_Store
