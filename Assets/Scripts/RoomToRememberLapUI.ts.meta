@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/ebf92952-1587-4ba3-9915-a0a52bce5bea>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 748dcb32-7f8f-4d19-abad-c6729634f853
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 748dcb32-7f8f-4d19-abad-c6729634f853
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> fe0d86ab-7842-4e9c-a280-d49bade761b1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/fe0d86ab-7842-4e9c-a280-d49bade761b1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 7377254f-fcd3-495d-9496-bb03d604f478
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    fromMemoryText: false
+    messageSeconds: false
+    scoreSeconds: false
+    walkAgainWidthCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - scoreSeconds: !<float> 3.000000
+      messageSeconds: !<float> 4.000000
+      fromMemoryText: Now walk it from memory
+      walkAgainWidthCm: !<float> 16.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">RoomToRememberLapUI – lap score, Walk again, final message</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float scoreSeconds = 3 {"hint":"Seconds the score stays before fading", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input float messageSeconds = 4 {"hint":"Seconds the final message stays before fading", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input string fromMemoryText = "Now walk it from memory" {"hint":"Final message text"}'
+    - '// @input float walkAgainWidthCm = 16 {"hint":"Walk again button width (cm)", "widget":"slider", "min":10, "max":25, "step":0.5}'
+    - '// @ui {"widget":"group_end"}'

@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/39c63eb1-22fe-49c0-86e7-f27fe4fec7c5>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 539ba546-19eb-4044-ab78-77743845d3bb
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 539ba546-19eb-4044-ab78-77743845d3bb
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 9a0b1c90-50db-4837-ad59-6a3fc61dfe36
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/9a0b1c90-50db-4837-ad59-6a3fc61dfe36>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: bb076bb4-8e1f-4f76-91dc-fd996269cc57
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    dropBelowEyeCm: false
+    followDistanceCm: false
+    followSpeed: false
+    instruction: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - followDistanceCm: !<float> 60.000000
+      dropBelowEyeCm: !<float> 20.000000
+      followSpeed: !<float> 2.000000
+      instruction: Pinch a piece of furniture to place it
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">RoomToRememberPlacingCardUI – lazy-follow placing card</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float followDistanceCm = 60 {"hint":"Distance in front of the user (cm)", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input float dropBelowEyeCm = 10 {"hint":"How far below eye level the card floats (cm)", "widget":"slider", "min":0, "max":40, "step":1}'
+    - '// @input float followSpeed = 2 {"hint":"Follow lag: higher = snappier", "widget":"slider", "min":0.5, "max":8, "step":0.1}'
+    - '// @input string instruction = "Pinch a piece of furniture to place it" {"hint":"Instruction line under the item name"}'
+    - '// @ui {"widget":"group_end"}'

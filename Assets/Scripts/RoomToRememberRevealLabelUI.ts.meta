@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/1624a4ec-a052-4102-b242-63fdc54f6d87>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 00abb098-2de3-4c16-915a-0864e524b6e5
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 00abb098-2de3-4c16-915a-0864e524b6e5
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 5b5b1fdc-e0a2-4df5-b2a7-fa8ef26089ec
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/5b5b1fdc-e0a2-4df5-b2a7-fa8ef26089ec>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 49f9c94c-96c6-4abf-a7fa-b49c6a4c14c6
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    labelColor: false
+    textHeightCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - textHeightCm: !<float> 5.000000
+      labelColor: !<Vec4> {x: 1.000000, y: 0.950000, z: 0.550000, w: 1.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">RoomToRememberRevealLabelUI – label above the revealed object</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float textHeightCm = 5 {"hint":"Text height (cm, em-square)", "widget":"slider", "min":2, "max":10, "step":0.5}'
+    - '// @input vec4 labelColor = "{1, 0.95, 0.55, 1}" {"hint":"Label colour", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'

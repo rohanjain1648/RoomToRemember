@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/fbbc9882-743c-4b00-bb5f-fe37ecce2ed0>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9da59c74-4884-4ffe-8bcd-ecc8825c34e3
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9da59c74-4884-4ffe-8bcd-ecc8825c34e3
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 1402cd4a-a6b9-4761-b4d5-b06a2cd30b26
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/1402cd4a-a6b9-4761-b4d5-b06a2cd30b26>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 61c2fbfa-55ed-486c-be5f-aa032ac3144f
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    buttonHeightCm: false
+    buttonWidthCm: false
+    subtitle: false
+    title: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - title: Room to Remember
+      subtitle: Cranial nerves I–VI · place six objects on your furniture
+      buttonWidthCm: !<float> 15.000000
+      buttonHeightCm: !<float> 6.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">RoomToRememberStartUI – doorway Start panel</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input string title = "Room to Remember" {"hint":"Title shown above the Start button"}'
+    - '// @input string subtitle = "Cranial nerves I–VI · place six objects on your furniture" {"hint":"One-line instruction under the title"}'
+    - '// @input float buttonWidthCm = 15 {"hint":"Start button width (cm)", "widget":"slider", "min":10, "max":25, "step":0.5}'
+    - '// @input float buttonHeightCm = 6 {"hint":"Start button height (cm)", "widget":"slider", "min":4, "max":10, "step":0.5}'
+    - '// @ui {"widget":"group_end"}'

@@ -1,0 +1,101 @@
+- !<AssetImportMetadata/fb82f538-99eb-46c3-a542-bedead6a5ce9>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> eccbfae1-2067-4316-b0b7-010c37692783
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> eccbfae1-2067-4316-b0b7-010c37692783
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 4b14ae80-4811-4d01-918d-989edd8d8859
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/4b14ae80-4811-4d01-918d-989edd8d8859>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 7853c1b4-35e2-443c-99cc-e8946a9ea33a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    approachDistanceCm: false
+    checkRevealSeconds: false
+    debugColliders: false
+    dotMaterial: false
+    dotMesh: false
+    dotPrompt: false
+    furnitureRoot: false
+    ghostMaterial: false
+    gradeHideDelaySeconds: false
+    lapPanel: false
+    missedOnceScale: false
+    missedTwiceScale: false
+    placingCard: false
+    revealLabel: false
+    sfxVolume: false
+    startPanel: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - startPanel: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      placingCard: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      dotPrompt: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      revealLabel: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      lapPanel: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      furnitureRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      dotMesh: !<reference.RenderMesh> 00000000-0000-0000-0000-000000000000
+      dotMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      ghostMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      approachDistanceCm: !<float> 150.000000
+      gradeHideDelaySeconds: !<float> 1.000000
+      checkRevealSeconds: !<float> 3.000000
+      missedOnceScale: 1.500000
+      missedTwiceScale: !<float> 2.000000
+      sfxVolume: 0.700000
+      debugColliders: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">RoomToRememberMain – memory palace orchestrator</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 startPanel {"hint":"Doorway Start panel"}'
+    - '// @input AssignableType_2 placingCard {"hint":"Lazy-follow placing card"}'
+    - "// @input AssignableType_3 dotPrompt {\"hint\":\"'1 of 6' label + Hint/Reveal/Got it/Missed buttons\"}"
+    - '// @input AssignableType_4 revealLabel {"hint":"Label above a revealed object"}'
+    - '// @input AssignableType_5 lapPanel {"hint":"Lap score, Walk again, final message"}'
+    - '// @input SceneObject furnitureRoot {"hint":"Stand-in furniture root: one child per piece, in route order"}'
+    - '// @input Asset.RenderMesh dotMesh {"hint":"Sphere mesh used for the glowing dots"}'
+    - '// @input Asset.Material dotMaterial {"hint":"Unlit material cloned per dot"}'
+    - '// @input Asset.Material ghostMaterial {"hint":"Translucent material for the hint outline"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float approachDistanceCm = 150 {"hint":"Walk within this distance (cm) of the next dot to see its prompt", "widget":"slider", "min":60, "max":300, "step":5}'
+    - '// @input float gradeHideDelaySeconds = 1 {"hint":"Seconds after grading before the object shrinks back into its dot", "widget":"slider", "min":0.2, "max":4, "step":0.1}'
+    - '// @input float checkRevealSeconds = 3 {"hint":"Seconds a pinched-to-check object stays visible in from-memory mode", "widget":"slider", "min":1, "max":8, "step":0.5}'
+    - '// @input float missedOnceScale = 1.5 {"hint":"Size multiplier after one miss", "widget":"slider", "min":1, "max":3, "step":0.1}'
+    - '// @input float missedTwiceScale = 2 {"hint":"Size multiplier after two or more misses", "widget":"slider", "min":1, "max":4, "step":0.1}'
+    - '// @input float sfxVolume = 0.7 {"hint":"Sound effect volume", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Debug"}'
+    - '// @input bool debugColliders {"hint":"Wireframe every furniture collider (takes effect on preview restart)"}'
+    - '// @ui {"widget":"group_end"}'

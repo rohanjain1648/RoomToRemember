@@ -1,0 +1,65 @@
+- !<AssetImportMetadata/edf82582-86e2-4be7-9718-35195efe7fbf>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> b71d37ff-3fde-4222-9562-b2f657c5af38
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> b71d37ff-3fde-4222-9562-b2f657c5af38
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 558e51e4-62fc-445d-8ef4-9a0f76ec62e2
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/558e51e4-62fc-445d-8ef4-9a0f76ec62e2>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 8a63914f-c1a8-4c50-9554-3840179e1532
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    buttonHeightCm: false
+    buttonSideOffsetCm: false
+    buttonTowardUserCm: false
+    buttonWidthCm: false
+    labelHeightCm: false
+    viewingDistanceCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - buttonWidthCm: !<float> 12.000000
+      buttonHeightCm: !<float> 6.000000
+      buttonSideOffsetCm: !<float> 26.000000
+      buttonTowardUserCm: !<float> 20.000000
+      labelHeightCm: !<float> 11.000000
+      viewingDistanceCm: !<float> 150.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">RoomToRememberDotPromptUI – step label + Hint/Reveal, Got it/Missed</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float buttonWidthCm = 12 {"hint":"Button width (cm)", "widget":"slider", "min":8, "max":20, "step":0.5}'
+    - '// @input float buttonHeightCm = 6 {"hint":"Button height (cm)", "widget":"slider", "min":4, "max":10, "step":0.5}'
+    - '// @input float buttonSideOffsetCm = 26 {"hint":"Sideways offset of the button column from the dot (cm)", "widget":"slider", "min":10, "max":50, "step":1}'
+    - '// @input float buttonTowardUserCm = 20 {"hint":"How far the buttons float toward the user from the dot (cm)", "widget":"slider", "min":0, "max":40, "step":1}'
+    - "// @input float labelHeightCm = 11 {\"hint\":\"Height of the '1 of 6' label above the dot (cm)\", \"widget\":\"slider\", \"min\":4, \"max\":30, \"step\":1}"
+    - '// @input float viewingDistanceCm = 150 {"hint":"Viewing distance the text is sized for (cm)", "widget":"slider", "min":80, "max":250, "step":5}'
+    - '// @ui {"widget":"group_end"}'
